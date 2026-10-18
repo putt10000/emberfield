@@ -1,90 +1,40 @@
-[gd_scene format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://main.gd" id="1_main"]
-[ext_resource type="PackedScene" path="res://ui/debug_overlay.tscn" id="2_dbg"]
-[ext_resource type="PackedScene" path="res://ui/rotate_overlay.tscn" id="3_rot"]
-[ext_resource type="Script" path="res://ui/safe_area_container.gd" id="4_safe"]
-[ext_resource type="Script" path="res://ui/safe_area_frame.gd" id="5_frame"]
-
-[sub_resource type="ProceduralSkyMaterial" id="SkyMat"]
-sky_top_color = Color(0.22, 0.2, 0.38, 1)
-sky_horizon_color = Color(0.85, 0.55, 0.45, 1)
-ground_bottom_color = Color(0.1, 0.08, 0.1, 1)
-ground_horizon_color = Color(0.85, 0.55, 0.45, 1)
-
-[sub_resource type="Sky" id="Sky"]
-sky_material = SubResource("SkyMat")
-
-[sub_resource type="Environment" id="Env"]
-background_mode = 2
-sky = SubResource("Sky")
-ambient_light_source = 3
-ambient_light_color = Color(0.5, 0.45, 0.6, 1)
-ambient_light_energy = 0.6
-tonemap_mode = 3
-glow_enabled = true
-glow_intensity = 0.6
-glow_bloom = 0.1
-
-[sub_resource type="PlaneMesh" id="Ground"]
-size = Vector2(24, 24)
-
-[sub_resource type="StandardMaterial3D" id="GroundMat"]
-albedo_color = Color(0.33, 0.52, 0.27, 1)
-roughness = 1.0
-
-[sub_resource type="BoxMesh" id="Box"]
-size = Vector3(1.5, 1.5, 1.5)
-
-[sub_resource type="StandardMaterial3D" id="BoxMat"]
-albedo_color = Color(0.85, 0.45, 0.3, 1)
-emission_enabled = true
-emission = Color(0.9, 0.35, 0.1, 1)
-emission_energy_multiplier = 0.6
+[ext_resource type="PackedScene" path="res://world/field.tscn" id="2_field"]
+[ext_resource type="PackedScene" path="res://world/camera_rig.tscn" id="3_cam"]
+[ext_resource type="PackedScene" path="res://world/tap_marker.tscn" id="4_tap"]
+[ext_resource type="Script" path="res://core/game_rules.gd" id="5_rules"]
+[ext_resource type="Script" path="res://entities/player/input_controller.gd" id="6_input"]
+[ext_resource type="PackedScene" path="res://ui/hud.tscn" id="7_hud"]
+[ext_resource type="PackedScene" path="res://ui/settings_menu.tscn" id="8_settings"]
+[ext_resource type="PackedScene" path="res://ui/vignette.tscn" id="9_vig"]
+[ext_resource type="PackedScene" path="res://ui/rotate_overlay.tscn" id="10_rot"]
+[ext_resource type="PackedScene" path="res://ui/debug_overlay.tscn" id="11_dbg"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_main")
 
 [node name="World" type="Node3D" parent="."]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
-environment = SubResource("Env")
+[node name="Field" parent="World" instance=ExtResource("2_field")]
 
-[node name="Sun" type="DirectionalLight3D" parent="World"]
-light_color = Color(1, 0.93, 0.8, 1)
-light_energy = 1.2
-shadow_enabled = true
+[node name="CameraRig" parent="World" instance=ExtResource("3_cam")]
 
-[node name="Camera" type="Camera3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 7, 11)
-fov = 40.0
+[node name="TapMarker" parent="World" instance=ExtResource("4_tap")]
 
-[node name="Ground" type="MeshInstance3D" parent="World"]
-mesh = SubResource("Ground")
-surface_material_override/0 = SubResource("GroundMat")
+[node name="GameRules" type="Node" parent="."]
+script = ExtResource("5_rules")
 
-[node name="Spinner" type="MeshInstance3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("Box")
-surface_material_override/0 = SubResource("BoxMat")
+[node name="InputController" type="Node" parent="."]
+script = ExtResource("6_input")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="HUD" parent="." instance=ExtResource("7_hud")]
 
-[node name="SafeArea" type="MarginContainer" parent="UI"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("4_safe")
-padding = 0
+[node name="SettingsMenu" parent="." instance=ExtResource("8_settings")]
 
-[node name="SafeAreaFrame" type="Control" parent="UI/SafeArea"]
-layout_mode = 2
-mouse_filter = 2
-script = ExtResource("5_frame")
+[node name="Vignette" parent="." instance=ExtResource("9_vig")]
 
-[node name="RotateOverlay" parent="." instance=ExtResource("3_rot")]
+[node name="RotateOverlay" parent="." instance=ExtResource("10_rot")]
 
-[node name="DebugOverlay" parent="." instance=ExtResource("2_dbg")]
+[node name="DebugOverlay" parent="." instance=ExtResource("11_dbg")]

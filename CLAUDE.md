@@ -49,6 +49,15 @@ commit, give exact test steps, and wait for their OK before continuing.
 - Keyboard: WASD/arrows move, click move/target, Space attack, 1-4 skills, Q potion,
   Esc settings, F3 debug overlay.
 
+## Gotchas learned
+- Godot bakes the nav mesh ~2×cell_height above the floor; keep `cell_height` small (0.05)
+  and bake from collision shapes only (render-mesh parsing is slow at runtime).
+- Godot 4.7 ships a native `VirtualJoystick` class; ours is `TouchJoystick`.
+- The desktop app's browser pane can throttle to ~3 fps after many reloads/resizes;
+  close its last tab and `preview_start` again to get real 60 fps numbers.
+- Tap detection must use `InputEventScreenTouch` (mouse is emulated to touch);
+  UI controls consume their touches first, so world taps use `_unhandled_input`.
+
 ## Workflow
 - `tools/build_web.sh` exports to build/web; `tools/serve_web.sh` serves it on the LAN
   and prints the phone URL; `tools/run_tests.sh` runs headless tests.

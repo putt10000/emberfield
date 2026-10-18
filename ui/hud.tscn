@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://ui/hud.gd" id="1_s"]
+[ext_resource type="Script" path="res://ui/safe_area_container.gd" id="2_safe"]
+[ext_resource type="Script" path="res://ui/controls/touch_joystick.gd" id="3_joy"]
+
+[node name="HUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_s")
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_safe")
+
+[node name="Root" type="Control" parent="SafeArea"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Joystick" type="Control" parent="SafeArea/Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.25
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_joy")
+
+[node name="MenuButton" type="Button" parent="SafeArea/Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_bottom = 56.0
+grow_horizontal = 0
+focus_mode = 0
+text = "MENU"

@@ -6,7 +6,14 @@ An original 2.5D action RPG prototype in the HD-2D style, built with Godot 4.7
 ## Run on this Mac
 1. Open Godot, click **Import**, pick this folder's `project.godot`, then press **F5**.
    Or from a terminal: `godot --path "$(pwd)"` (the `godot` alias is set in ~/.zshrc).
-2. F3 toggles the FPS / draw-call overlay. Esc opens settings (from Milestone 2).
+2. Controls: click the ground to walk (tap-to-move) or WASD/arrows. Esc or the MENU
+   button opens settings (movement mode, shadows, glow, FPS overlay). F3 toggles the overlay.
+3. On a phone: tap the ground, or switch to Joystick in settings and drag in the bottom-left area.
+
+## Regenerate placeholder sprites
+```bash
+tools/gen_sprites.sh
+```
 
 ## Test on your phone (same Wi-Fi)
 ```bash

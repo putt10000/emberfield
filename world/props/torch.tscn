@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://world/props/torch.gd" id="1_s"]
+
+[sub_resource type="StandardMaterial3D" id="PostMat"]
+albedo_color = Color(0.3, 0.2, 0.12, 1)
+roughness = 1.0
+
+[sub_resource type="CylinderMesh" id="Post"]
+material = SubResource("PostMat")
+top_radius = 0.06
+bottom_radius = 0.08
+height = 1.7
+radial_segments = 6
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="FlameMat"]
+shading_mode = 0
+albedo_color = Color(1, 0.6, 0.2, 1)
+emission_enabled = true
+emission = Color(1, 0.55, 0.15, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="SphereMesh" id="Flame"]
+material = SubResource("FlameMat")
+radius = 0.14
+height = 0.3
+radial_segments = 6
+rings = 3
+
+[sub_resource type="CylinderShape3D" id="Col"]
+radius = 0.12
+height = 1.7
+
+[node name="Torch" type="Node3D"]
+script = ExtResource("1_s")
+
+[node name="Post" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+cast_shadow = 0
+mesh = SubResource("Post")
+
+[node name="Flame" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+cast_shadow = 0
+mesh = SubResource("Flame")
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
+light_color = Color(1, 0.72, 0.4, 1)
+light_energy = 1.8
+omni_range = 7.0
+omni_attenuation = 1.4
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("Col")

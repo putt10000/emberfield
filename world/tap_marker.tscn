@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Shader" path="res://shaders/ring.gdshader" id="1_sh"]
+[ext_resource type="Script" path="res://world/tap_marker.gd" id="2_s"]
+
+[sub_resource type="ShaderMaterial" id="RingMat"]
+shader = ExtResource("1_sh")
+shader_parameter/color = Color(1, 0.85, 0.4, 1)
+shader_parameter/radius = 0.4
+shader_parameter/thickness = 0.08
+shader_parameter/alpha = 1.0
+
+[sub_resource type="PlaneMesh" id="Quad"]
+size = Vector2(1.2, 1.2)
+
+[node name="TapMarker" type="MeshInstance3D"]
+cast_shadow = 0
+mesh = SubResource("Quad")
+surface_material_override/0 = SubResource("RingMat")
+script = ExtResource("2_s")

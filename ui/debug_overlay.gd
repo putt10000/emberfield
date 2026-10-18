@@ -8,6 +8,7 @@ extends CanvasLayer
 @onready var _toggle: Button = %Toggle
 
 var _accum := 0.0
+var _frames := 0
 
 
 func _ready() -> void:
@@ -35,16 +36,23 @@ func _process(delta: float) -> void:
 	if not _panel.visible:
 		return
 	_accum += delta
+	_frames += 1
 	if _accum < 0.25:
 		return
+	var delta_ms := _accum / _frames * 1000.0
 	_accum = 0.0
+	_frames = 0
 	var vis := get_viewport().get_visible_rect().size
 	var win := DisplayServer.window_get_size()
-	_label.text = "FPS %d\nDraw calls %d\nObjects %d\nPrimitives %.1fk\nMem %.1f MB\n%s\n%s\nView %dx%d  Win %dx%d" % [
+	_label.text = "FPS %d  frame %.1f ms\nDraw calls %d  Objects %d\nPrimitives %.1fk\nCPU process %.1f ms  physics %.1f ms\nnav %.2f ms  Mem %.1f MB\n%s\n%s\nView %dx%d  Win %dx%d" % [
 		Performance.get_monitor(Performance.TIME_FPS),
+		delta_ms,
 		Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),
 		Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME),
 		Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME) / 1000.0,
+		Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0,
+		Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0,
+		Performance.get_monitor(Performance.TIME_NAVIGATION_PROCESS) * 1000.0,
 		Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0,
 		RenderingServer.get_current_rendering_method(),
 		RenderingServer.get_video_adapter_name().left(40),
