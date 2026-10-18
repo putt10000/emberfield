@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Shader" path="res://shaders/ring.gdshader" id="1_sh"]
+[ext_resource type="Script" path="res://world/target_ring.gd" id="2_s"]
+
+[sub_resource type="ShaderMaterial" id="RingMat"]
+shader = ExtResource("1_sh")
+shader_parameter/color = Color(1, 0.32, 0.25, 1)
+shader_parameter/radius = 0.42
+shader_parameter/thickness = 0.09
+shader_parameter/alpha = 0.95
+
+[sub_resource type="PlaneMesh" id="Quad"]
+size = Vector2(1.5, 1.5)
+
+[node name="TargetRing" type="MeshInstance3D"]
+cast_shadow = 0
+mesh = SubResource("Quad")
+surface_material_override/0 = SubResource("RingMat")
+script = ExtResource("2_s")

@@ -6,8 +6,8 @@
 [resource]
 script = ExtResource("1_def")
 texture = ExtResource("2_tex")
-frame_size = Vector2i(32, 32)
-pixel_size = 0.05
+frame_size = Vector2i(48, 48)
+pixel_size = 0.036
 anim_order = Array[String](["idle", "walk", "attack", "hit", "death"])
 animations = {
 "attack": {

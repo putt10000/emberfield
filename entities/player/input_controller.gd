@@ -18,6 +18,9 @@ signal intent_issued(intent: Intent)
 			joystick.direction_changed.connect(func(d: Vector2) -> void: _joy_dir = d)
 
 const GROUND_MASK := 1
+const ENEMY_MASK := 4
+## How close (logical px) a tap must be to an enemy's body to select it.
+const ENEMY_PICK_RADIUS := 90.0
 const TAP_MAX_DRIFT := 24.0
 const TAP_MAX_SECONDS := 0.4
 
@@ -57,14 +60,48 @@ func _physics_process(_delta: float) -> void:
 		return
 	var screen_pos := _pending_tap
 	_pending_tap = Vector2.INF
+	# 1) An enemy under or near the finger wins (works in both movement modes).
+	var enemy := _pick_enemy(screen_pos)
+	if enemy:
+		intent_issued.emit(Intent.attack_target(enemy))
+		return
+	# 2) Otherwise walk there (tap-to-move mode only).
 	if int(Settings.get_value("movement_mode")) != Settings.MovementMode.TAP_TO_MOVE:
-		return  # Milestone 3: taps still select enemies in joystick mode.
+		return
 	var hit := _raycast_ground(screen_pos)
 	if hit == Vector3.INF:
 		return
 	if tap_marker:
 		tap_marker.show_at(hit)
 	intent_issued.emit(Intent.move_to(hit))
+
+
+## Direct physics hit first; else the nearest living enemy whose body is within
+## ENEMY_PICK_RADIUS on screen (fat-finger friendly).
+func _pick_enemy(screen_pos: Vector2) -> Node:
+	if camera == null:
+		return null
+	var from := camera.project_ray_origin(screen_pos)
+	var to := from + camera.project_ray_normal(screen_pos) * 200.0
+	var query := PhysicsRayQueryParameters3D.create(from, to, ENEMY_MASK)
+	var result := camera.get_world_3d().direct_space_state.intersect_ray(query)
+	if not result.is_empty():
+		var c: Object = result["collider"]
+		if c is Node and (c as Node).is_in_group("enemy") and c.is_alive():
+			return c
+	var best: Node = null
+	var best_d := ENEMY_PICK_RADIUS
+	for e in get_tree().get_nodes_in_group("enemy"):
+		if not e.is_alive() or not e.visible:
+			continue
+		var p: Vector3 = e.global_position + Vector3(0.0, 0.7, 0.0)
+		if camera.is_position_behind(p):
+			continue
+		var d := camera.unproject_position(p).distance_to(screen_pos)
+		if d < best_d:
+			best_d = d
+			best = e
+	return best
 
 
 func _raycast_ground(screen_pos: Vector2) -> Vector3:

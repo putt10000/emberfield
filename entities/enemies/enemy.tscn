@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://entities/enemies/enemy.gd" id="1_s"]
+[ext_resource type="Script" path="res://entities/enemies/enemy_ai.gd" id="2_ai"]
+[ext_resource type="Script" path="res://entities/shared/billboard_sprite.gd" id="3_bs"]
+[ext_resource type="PackedScene" path="res://entities/shared/blob_shadow.tscn" id="4_shadow"]
+
+[sub_resource type="CapsuleShape3D" id="Capsule"]
+radius = 0.4
+height = 1.1
+
+[node name="Enemy" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 1
+axis_lock_linear_y = true
+script = ExtResource("1_s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+shape = SubResource("Capsule")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_desired_distance = 0.6
+target_desired_distance = 0.5
+
+[node name="Sprite" type="AnimatedSprite3D" parent="."]
+script = ExtResource("3_bs")
+
+[node name="BlobShadow" parent="." instance=ExtResource("4_shadow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
+
+[node name="AI" type="Node" parent="."]
+script = ExtResource("2_ai")

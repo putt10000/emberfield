@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="SpriteSheetDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://entities/shared/sprite_sheet_def.gd" id="1_def"]
+[ext_resource type="Texture2D" path="res://art/sprites/mossblob.png" id="2_tex"]
+
+[resource]
+script = ExtResource("1_def")
+texture = ExtResource("2_tex")
+frame_size = Vector2i(48, 48)
+pixel_size = 0.036
+anim_order = Array[String](["idle", "walk", "attack", "hit", "death"])
+animations = {
+"attack": {
+"fps": 12.0,
+"frames": 4,
+"loop": false
+},
+"death": {
+"fps": 6.0,
+"frames": 4,
+"loop": false
+},
+"hit": {
+"fps": 10.0,
+"frames": 2,
+"loop": false
+},
+"idle": {
+"fps": 2.0,
+"frames": 2,
+"loop": true
+},
+"walk": {
+"fps": 9.0,
+"frames": 6,
+"loop": true
+}
+}

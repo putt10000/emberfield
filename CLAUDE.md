@@ -20,7 +20,7 @@ commit, give exact test steps, and wait for their OK before continuing.
 
 ## Visual style (HD-2D)
 - World from CSG/primitives; characters as `Sprite3D`, billboard **Y axis only**,
-  nearest filtering, 32x32 px frames, consistent pixel size. 4 directions;
+  nearest filtering, 48x48 px frames, consistent pixel size. 4 directions;
   animations idle/walk/attack/hit/death. Placeholder sheets are generated;
   real art is dropped in by replacing PNGs with the same layout (see art/sprites/README.md).
 - Camera: perspective, pitch ~30°, fixed yaw, FOV ~40, smooth follow, clamped to map.
@@ -37,8 +37,11 @@ commit, give exact test steps, and wait for their OK before continuing.
 - Autoloads (keep few): `EventBus` (signals only), `Settings` (user:// persisted),
   `GameState` (session data), `DeviceInfo` (platform + safe area).
 - Scripts small, with a `##` doc comment at the top. Tabs for indentation. Typed GDScript.
-- Tests: `tests/test_*.gd` extend `tests/lib/test_case.gd`; run `tools/run_tests.sh`.
-  Combat math, crit, level-up must stay covered.
+- Tests: `tests/test_*.gd` extend `tests/lib/test_case.gd` (unit), plus `tests/sim_test.gd`,
+  a scripted scenario that main.gd attaches when run with `-- --sim-test`. Run both with
+  `tools/run_tests.sh`. Combat math, crit, level-up and the fight loop must stay covered.
+- Entities expose `stats: Stats`, `is_alive()`, `display_name`; only CombatSystem edits hp/sp.
+  Enemies request attacks via `Intent.basic_attack(self)` through `GameRules.instance.submit`.
 
 ## Controls
 - Two movement modes in Settings (persisted): tap-to-move (raycast + NavigationAgent3D,
@@ -57,6 +60,10 @@ commit, give exact test steps, and wait for their OK before continuing.
   close its last tab and `preview_start` again to get real 60 fps numbers.
 - Tap detection must use `InputEventScreenTouch` (mouse is emulated to touch);
   UI controls consume their touches first, so world taps use `_unhandled_input`.
+- Autoloads do not exist in `godot -s script.gd` mode, so anything that needs the game
+  running must go through `-- --sim-test` (see tests/sim_test.gd), not `-s`.
+- The browser pane throttles to ~2 fps whenever the Claude window is hidden behind
+  another app; numbers are only meaningful while it is visible.
 
 ## Workflow
 - `tools/build_web.sh` exports to build/web; `tools/serve_web.sh` serves it on the LAN

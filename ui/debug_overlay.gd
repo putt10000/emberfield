@@ -11,10 +11,26 @@ var _accum := 0.0
 var _frames := 0
 
 
+var _events: Array[String] = []
+
+
 func _ready() -> void:
 	_panel.visible = Settings.get_value("show_debug")
 	_toggle.pressed.connect(_on_toggle)
 	EventBus.setting_changed.connect(_on_setting_changed)
+	# Short event log: makes combat observable without a debugger.
+	EventBus.target_changed.connect(func(t: Node) -> void: _log("target: %s" % (t.name if t else "none")))
+	EventBus.attack_started.connect(func(a: Node, t: Node) -> void: _log("%s swings at %s" % [a.name, t.name]))
+	EventBus.damage_dealt.connect(func(r: Dictionary) -> void:
+		_log("%s hits %s for %d%s" % [r.source.name, r.target.name, r.amount, "!" if r.is_crit else ""]))
+	EventBus.entity_died.connect(func(e: Node, k: Node) -> void: _log("%s died (%s)" % [e.name, k.name if k else "?"]))
+	EventBus.player_respawned.connect(func() -> void: _log("player respawned"))
+
+
+func _log(line: String) -> void:
+	_events.append(line)
+	if _events.size() > 6:
+		_events.pop_front()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -58,3 +74,5 @@ func _process(delta: float) -> void:
 		RenderingServer.get_video_adapter_name().left(40),
 		vis.x, vis.y, win.x, win.y,
 	]
+	if not _events.is_empty():
+		_label.text += "\n--\n" + "\n".join(_events)

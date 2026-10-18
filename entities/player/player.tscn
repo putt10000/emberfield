@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_s"]
 [ext_resource type="Script" path="res://entities/shared/billboard_sprite.gd" id="2_bs"]
 [ext_resource type="Resource" path="res://art/sprites/player_sheet.tres" id="3_sheet"]
 [ext_resource type="PackedScene" path="res://entities/shared/blob_shadow.tscn" id="4_shadow"]
+[ext_resource type="Resource" path="res://data/classes/swordfighter.tres" id="5_class"]
 
 [sub_resource type="CapsuleShape3D" id="Capsule"]
 radius = 0.35
@@ -14,6 +15,7 @@ collision_layer = 2
 collision_mask = 1
 axis_lock_linear_y = true
 script = ExtResource("1_s")
+class_def = ExtResource("5_class")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)

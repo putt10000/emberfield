@@ -6,7 +6,7 @@ matching `*_sheet.tres` if your art differs).
 
 Layout (see `entities/shared/sprite_sheet_def.gd`):
 
-- Frames are `32x32` px, feet on the bottom row, character centred horizontally.
+- Frames are `48x48` px, feet on the bottom row, character centred horizontally.
 - Rows = animations in this order, **4 rows each** in the order down, left, right, up:
 
 | Animation | Rows | Frames | fps | Loops |

@@ -21,9 +21,15 @@ Status key: ✅ done · 🔄 in progress · ⬜ planned
 - ✅ Settings menu (MENU button / Esc): movement mode, shadows, glow, FPS overlay; persisted to user://
 - ✅ Measured in browser: 60 fps, 20-28 draw calls, ~5 ms CPU per frame
 
-## Milestone 3 — Combat core and enemy 1 ⬜
-Resource defs + data, CombatSystem, targeting, auto-attack, Mossblob AI,
-damage numbers, hit flash, death anim, combat tests.
+## Milestone 3 — Combat core and enemy 1 ✅
+- ✅ Resource defs (ClassDef, EnemyDef, SkillDef, LootTable) + data: swordfighter.tres, mossblob.tres
+- ✅ Stats model; CombatSystem = the only place damage, crit, variance and attack timing are resolved
+- ✅ Intent flow: tap enemy -> ATTACK_TARGET -> player approaches -> BASIC_ATTACK intents -> CombatSystem
+- ✅ Mossblob AI: idle -> wander -> chase -> attack -> return/leash (with heal) -> dead; respawn timer
+- ✅ Target ring, target frame + world HP bars, floating damage numbers (crits big/orange), hit flash
+- ✅ Player HP/SP frame; placeholder instant respawn at town on death (fade in M5)
+- ✅ Tests: 7 combat-math unit tests + 19-check headless scenario (tools/run_tests.sh)
+- ✅ Sprites redrawn chibi-style at 48x48 (big head, shading, glossy jelly)
 
 ## Milestone 4 — Skills and action bar ⬜
 4 skills as data, cooldowns + SP, action bar with cooldown overlays,

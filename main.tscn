@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://world/field.tscn" id="2_field"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" path="res://ui/vignette.tscn" id="9_vig"]
 [ext_resource type="PackedScene" path="res://ui/rotate_overlay.tscn" id="10_rot"]
 [ext_resource type="PackedScene" path="res://ui/debug_overlay.tscn" id="11_dbg"]
+[ext_resource type="PackedScene" path="res://world/target_ring.tscn" id="12_ring"]
+[ext_resource type="Script" path="res://entities/shared/damage_numbers.gd" id="13_dmg"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_main")
@@ -22,6 +24,11 @@ script = ExtResource("1_main")
 [node name="CameraRig" parent="World" instance=ExtResource("3_cam")]
 
 [node name="TapMarker" parent="World" instance=ExtResource("4_tap")]
+
+[node name="TargetRing" parent="World" instance=ExtResource("12_ring")]
+
+[node name="DamageNumbers" type="Node3D" parent="World"]
+script = ExtResource("13_dmg")
 
 [node name="GameRules" type="Node" parent="."]
 script = ExtResource("5_rules")

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ClassDef" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://core/defs/class_def.gd" id="1_def"]
+[ext_resource type="Resource" path="res://art/sprites/player_sheet.tres" id="2_sheet"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"swordfighter"
+display_name = "Swordfighter"
+sheet = ExtResource("2_sheet")
+max_hp = 100
+max_sp = 30
+atk = 12
+def = 4
+attack_speed = 1.2
+move_speed = 5.0
+crit_rate = 0.1
+attack_range = 1.6
+hit_delay = 0.15
+hp_per_level = 12
+sp_per_level = 4
+atk_per_level = 2
+def_per_level = 1
+skill_ids = Array[StringName]([&"cleave", &"ember_whirl", &"lunge", &"second_wind"])

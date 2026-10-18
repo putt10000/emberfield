@@ -9,6 +9,14 @@
 extends NavigationRegion3D
 
 const TORCH := preload("res://world/props/torch.tscn")
+const ENEMY := preload("res://entities/enemies/enemy.tscn")
+const MOSSBLOB := preload("res://data/enemies/mossblob.tres")
+
+## [EnemyDef, (x, z)] — kept away from the safe zone (x < -9) and the walls.
+const ENEMY_SPAWNS: Array = [
+	[MOSSBLOB, Vector2(-2, -6)], [MOSSBLOB, Vector2(3, 4)], [MOSSBLOB, Vector2(8, -4)],
+	[MOSSBLOB, Vector2(12, 5)], [MOSSBLOB, Vector2(15, -9)], [MOSSBLOB, Vector2(6, 9)],
+]
 
 ## (x, z) of tree trunks. Map spans x -20..20, z -14..14; walls at the edges.
 const TREES: Array[Vector2] = [
@@ -36,6 +44,7 @@ const TORCHES: Array[Vector2] = [
 @onready var spawn_point: Marker3D = $SpawnPoint
 @onready var props: Node3D = $Props
 @onready var colliders: Node3D = $Colliders
+@onready var enemies: Node3D = $Enemies
 
 var nav_ready := false
 
@@ -53,6 +62,7 @@ func _ready() -> void:
 	await get_tree().process_frame
 	bake_navigation_mesh(false)
 	nav_ready = true
+	_spawn_enemies()
 	print("Field: nav mesh baked, %d polygons" % navigation_mesh.get_polygon_count())
 
 
@@ -113,6 +123,14 @@ func _place_rocks() -> void:
 		shape.radius = 0.5 * s
 		_add_collider(shape, Transform3D(Basis(), Vector3(r.x, 0.2 * s, r.y)))
 	_add_multimesh(mesh, xfs, false)
+
+
+func _spawn_enemies() -> void:
+	for spawn in ENEMY_SPAWNS:
+		var e: Enemy = ENEMY.instantiate()
+		e.def = spawn[0]
+		e.position = Vector3(spawn[1].x, 0.0, spawn[1].y)  # before add_child: _ready records it
+		enemies.add_child(e)
 
 
 func _place_torches() -> void:

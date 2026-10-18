@@ -27,6 +27,10 @@ func _ready() -> void:
 	input_controller.joystick = hud.joystick
 	input_controller.intent_issued.connect(rules.submit)
 	hud.menu_requested.connect(settings_menu.toggle)
+	if "--sim-test" in OS.get_cmdline_user_args():
+		var sim: Node = load("res://tests/sim_test.gd").new()
+		sim.name = "SimTest"
+		add_child(sim)
 
 
 func _spawn_player() -> void:

@@ -18,6 +18,7 @@ signal player_respawned()
 # --- Combat results (M3+) -----------------------------------------------------
 ## Emitted by CombatSystem after damage is resolved. result is a Dictionary:
 ## { "source": Node, "target": Node, "amount": int, "is_crit": bool, "skill_id": String }
+signal attack_started(attacker: Node, target: Node)
 signal damage_dealt(result: Dictionary)
 signal healed(target: Node, amount: int)
 signal entity_died(entity: Node, killer: Node)

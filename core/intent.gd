@@ -6,14 +6,16 @@
 class_name Intent
 extends RefCounted
 
-enum Type { MOVE_TO, MOVE_DIR, STOP, ATTACK_TARGET, USE_SKILL, USE_POTION }
+enum Type { MOVE_TO, MOVE_DIR, STOP, ATTACK_TARGET, BASIC_ATTACK, USE_SKILL, USE_POTION }
 
 var type: Type
+## Who issued it (an enemy AI, or null for the local player).
+var source: Node = null
 ## MOVE_TO: world position to walk to.
 var position: Vector3 = Vector3.ZERO
 ## MOVE_DIR: x = world X (screen right), y = world Z (screen down). Length 0..1.
 var direction: Vector2 = Vector2.ZERO
-## ATTACK_TARGET: the enemy node.
+## ATTACK_TARGET: select this enemy as the player's target.
 var target: Node = null
 ## USE_SKILL: id from data/skills.
 var skill_id: StringName = &""
@@ -43,6 +45,14 @@ static func attack_target(t: Node) -> Intent:
 	var i := Intent.new()
 	i.type = Type.ATTACK_TARGET
 	i.target = t
+	return i
+
+
+## BASIC_ATTACK: source swings at its current target (CombatSystem checks range/cooldown).
+static func basic_attack(src: Node) -> Intent:
+	var i := Intent.new()
+	i.type = Type.BASIC_ATTACK
+	i.source = src
 	return i
 
 

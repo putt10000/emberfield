@@ -15,6 +15,10 @@ func _initialize() -> void:
 	files.sort()
 	for f in files:
 		var script: GDScript = load("res://tests/" + f)
+		if script == null or not script.can_instantiate():
+			printerr("[FAIL] %s could not be loaded (parse error above)" % f)
+			failed += 1
+			continue
 		var case: RefCounted = script.new()
 		var ran := 0
 		for m in script.get_script_method_list():

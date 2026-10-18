@@ -153,3 +153,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0, 0)
 [node name="Props" type="Node3D" parent="."]
 
 [node name="Colliders" type="Node3D" parent="."]
+
+[node name="Enemies" type="Node3D" parent="."]
