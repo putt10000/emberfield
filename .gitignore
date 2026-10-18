@@ -1,0 +1,17 @@
+# Godot 4
+.godot/
+*.import.tmp
+.import/
+export.cfg
+.mono/
+data_*/
+mono_crash.*.json
+
+# Build output
+build/
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/

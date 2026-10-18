@@ -1,0 +1,5 @@
+# Normalize line endings
+* text=auto eol=lf
+*.png binary
+*.tpz binary
+*.wasm binary
