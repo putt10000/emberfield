@@ -20,6 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Enable GitHub Pages for this repo (first run only)
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
       - name: Install Godot 4.7.2 + export templates
         uses: chickensoft-games/setup-godot@v2
         with:
