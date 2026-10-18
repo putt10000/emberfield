@@ -20,10 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Enable GitHub Pages for this repo (first run only)
+      # Pages must be enabled once by hand: repo Settings > Pages > Source: GitHub Actions.
+      # This step then just confirms the config; it must not block the build.
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
+        continue-on-error: true
 
       - name: Install Godot 4.7.2 + export templates
         uses: chickensoft-games/setup-godot@v2
