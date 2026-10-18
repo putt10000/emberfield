@@ -2,14 +2,14 @@
 
 Status key: ✅ done · 🔄 in progress · ⬜ planned
 
-## Milestone 1 — Foundation and phone pipeline 🔄
+## Milestone 1 — Foundation and phone pipeline ✅
 - ✅ Godot 4.7.2 project, Compatibility renderer, 1280x720 canvas_items/expand, landscape
 - ✅ Autoloads: EventBus, Settings (user://), GameState, DeviceInfo (safe area)
 - ✅ Debug overlay (FPS, draw calls), safe-area frame test, rotate-to-landscape prompt
 - ✅ Web export preset (threads off), custom shell with viewport-fit=cover
 - ✅ tools/build_web.sh, tools/serve_web.sh, tools/run_tests.sh, headless test runner
 - ✅ CLAUDE.md, GDD, README
-- ⬜ GitHub repo + Pages deploy verified from a phone
+- ✅ GitHub repo (github.com/putt10000/emberfield) + Pages deploy: https://putt10000.github.io/emberfield/
 
 ## Milestone 2 — HD-2D world and movement ⬜
 Field map (CSG), nav mesh, camera rig, lighting + glow + vignette, blob shadows,

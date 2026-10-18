@@ -16,7 +16,8 @@ Open the printed `http://<ip>:8060/` URL on the phone in landscape.
 The server disables caching, so a rebuild shows up on reload.
 
 ## Test from anywhere
-Every push to `main` builds and deploys to GitHub Pages (see Actions tab).
+Live build: https://putt10000.github.io/emberfield/ (open on your phone in landscape).
+Every push to `main` rebuilds and redeploys it in about 2 minutes (see the Actions tab).
 
 ## Tests
 ```bash
