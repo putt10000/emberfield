@@ -47,12 +47,36 @@ func _unhandled_input(event: InputEvent) -> void:
 				_pending_tap = t.position
 
 
+const SKILL_ACTIONS: Array[StringName] = [&"skill_1", &"skill_2", &"skill_3", &"skill_4"]
+
+
 func _process(_delta: float) -> void:
 	var kb := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var dir := kb if kb != Vector2.ZERO else _joy_dir
 	if dir != _last_dir:
 		_last_dir = dir
 		intent_issued.emit(Intent.move_dir(dir))
+	# Keyboard combat (desktop testing): Space = attack, 1-4 = skills.
+	if Input.is_action_just_pressed("attack"):
+		intent_issued.emit(Intent.basic_attack(null))
+	for i in SKILL_ACTIONS.size():
+		if Input.is_action_just_pressed(SKILL_ACTIONS[i]):
+			request_skill_slot(i)
+
+
+## Issues USE_SKILL for the player's skill in action-bar slot `slot` (0-3).
+func request_skill_slot(slot: int) -> void:
+	var player: Node = GameRules.instance.player if GameRules.instance else null
+	if player == null or not player.has_method("get_skills"):
+		return
+	var skills: Array = player.get_skills()
+	if slot < 0 or slot >= skills.size() or skills[slot] == null:
+		return
+	intent_issued.emit(Intent.use_skill(skills[slot].id, null))
+
+
+func request_attack() -> void:
+	intent_issued.emit(Intent.basic_attack(null))
 
 
 func _physics_process(_delta: float) -> void:

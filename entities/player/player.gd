@@ -26,6 +26,9 @@ var _nav_active := false
 var _stuck_time := 0.0
 var _target_repath := 0.0
 var _dead := false
+var _dash_dir := Vector3.ZERO
+var _dash_speed := 0.0
+var _dash_time := 0.0
 
 
 func _ready() -> void:
@@ -44,6 +47,24 @@ func _ready() -> void:
 	EventBus.damage_dealt.connect(_on_damage_dealt)
 	EventBus.entity_died.connect(_on_entity_died)
 	EventBus.attack_started.connect(_on_attack_started)
+	EventBus.skill_used.connect(_on_skill_used)
+	EventBus.healed.connect(_on_healed)
+
+
+func get_skills() -> Array[SkillDef]:
+	return class_def.skills if class_def else []
+
+
+## Called by CombatSystem for dash skills: move `distance` along `direction`
+## over `seconds`, ignoring normal input. Walls still block (move_and_slide).
+func start_dash(direction: Vector3, distance: float, seconds: float) -> void:
+	if distance <= 0.0:
+		return
+	_dash_dir = direction.normalized()
+	_dash_speed = distance / maxf(seconds, 0.01)
+	_dash_time = seconds
+	_nav_active = false
+	_face_point(global_position + _dash_dir)
 
 
 func is_alive() -> bool:
@@ -94,6 +115,12 @@ func set_target(t: Node) -> void:
 
 func _physics_process(delta: float) -> void:
 	if _dead:
+		return
+	if _dash_time > 0.0:
+		_dash_time -= delta
+		velocity = _dash_dir * _dash_speed
+		move_and_slide()
+		global_position.y = 0.0
 		return
 	var dir := Vector3.ZERO
 	var attacking := false
@@ -171,6 +198,18 @@ func _on_damage_dealt(result: Dictionary) -> void:
 		sprite.play_anim(&"hit", facing, true)
 
 
+func _on_skill_used(_skill_id: StringName, caster: Node) -> void:
+	if caster == self:
+		if target and is_instance_valid(target):
+			_face_point(target.global_position)
+		sprite.play_anim(&"attack", facing, true)
+
+
+func _on_healed(who: Node, _amount: int) -> void:
+	if who == self:
+		sprite.flash_color(Color(0.5, 2.5, 0.8))
+
+
 func _on_entity_died(entity: Node, _killer: Node) -> void:
 	if entity == target:
 		set_target(null)
@@ -189,6 +228,7 @@ func respawn(at: Vector3) -> void:
 	global_position = at
 	velocity = Vector3.ZERO
 	_dead = false
+	_dash_time = 0.0
 	set_target(null)
 	sprite.reset()
 	GameRules.instance.combat.reset_attacker(self)

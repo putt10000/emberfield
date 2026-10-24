@@ -23,10 +23,12 @@ Auto-attacks the current target when in range.
 
 | Skill | Type | Effect | Cooldown | SP |
 |---|---|---|---|---|
-| Cleave | heavy single-target | 2.2x ATK, knockback | 6 s | 12 |
-| Ember Whirl | short-range AoE | 1.2x ATK to all within 2.5 m | 8 s | 18 |
-| Lunge | dash | dash 4 m toward target/facing, 0.8x ATK on contact | 5 s | 8 |
+| Cleave | heavy single-target | 2.2x ATK, knockback, range 1.9 m | 6 s | 12 |
+| Ember Whirl | short-range AoE | 1.2x ATK to all within 2.6 m | 8 s | 18 |
+| Lunge | dash | dash up to 4 m toward target/facing, 0.8x ATK to enemies within 1.4 m on landing | 5 s | 8 |
 | Second Wind | self-heal | heal 30% max HP | 15 s | 20 |
+
+SP regenerates 0.8/s out of combat and 0.3/s in combat (no damage dealt/taken for 4 s = out of combat).
 
 (Numbers are starting points, tuned in data/skills/*.tres.)
 

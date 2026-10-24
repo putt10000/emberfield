@@ -56,8 +56,9 @@ static func basic_attack(src: Node) -> Intent:
 	return i
 
 
-static func use_skill(id: StringName) -> Intent:
+static func use_skill(id: StringName, src: Node = null) -> Intent:
 	var i := Intent.new()
 	i.type = Type.USE_SKILL
 	i.skill_id = id
+	i.source = src
 	return i

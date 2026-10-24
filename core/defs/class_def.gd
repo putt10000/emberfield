@@ -25,5 +25,8 @@ extends Resource
 @export var atk_per_level: int = 2
 @export var def_per_level: int = 1
 
-@export_group("Skills (Milestone 4)")
-@export var skill_ids: Array[StringName] = []
+@export_group("Skills")
+## Up to 4 skills, in action-bar order (slots 1-4 / keys 1-4).
+@export var skills: Array[SkillDef] = []
+@export var sp_regen_out_of_combat: float = 0.8  ## SP per second
+@export var sp_regen_in_combat: float = 0.3

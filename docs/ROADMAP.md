@@ -31,9 +31,15 @@ Status key: ✅ done · 🔄 in progress · ⬜ planned
 - ✅ Tests: 7 combat-math unit tests + 19-check headless scenario (tools/run_tests.sh)
 - ✅ Sprites redrawn chibi-style at 48x48 (big head, shading, glossy jelly)
 
-## Milestone 4 — Skills and action bar ⬜
-4 skills as data, cooldowns + SP, action bar with cooldown overlays,
-multitouch, knockback, crit screen shake.
+## Milestone 4 — Skills and action bar ✅
+- ✅ Skills as data (data/skills/*.tres): Cleave (strike + knockback), Ember Whirl (AoE),
+  Lunge (dash + landing hit), Second Wind (heal); referenced from the class
+- ✅ CombatSystem resolves SP cost, cooldowns, effects; SP regen (faster out of combat)
+- ✅ Action bar bottom-right: 104 px ATK + four 72 px skill buttons with radial cooldown,
+  seconds left, SP cost, dim when unaffordable, shake on refusal; keyboard Space / 1-4
+- ✅ Attack with no target auto-targets the nearest enemy; strikes auto-target in range
+- ✅ Knockback on Cleave, screen shake on crits/heavy hits, ring VFX per skill
+- ✅ Tests: 5 skill-gating unit tests + scenario checks for all four skills, cooldown, SP regen
 
 ## Milestone 5 — Enemy 2, progression, loot, death ⬜
 Ash Wisp + projectile, EXP/level-up, loot + pickup, potion, death/respawn, HUD.

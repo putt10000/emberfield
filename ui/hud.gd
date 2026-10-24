@@ -14,6 +14,7 @@ signal menu_requested
 @onready var target_frame: Control = %TargetFrame
 @onready var target_name: Label = %TargetName
 @onready var target_hp: ProgressBar = %TargetHp
+@onready var action_bar: Control = %ActionBar
 
 var _player: Node = null
 var _target: Node = null

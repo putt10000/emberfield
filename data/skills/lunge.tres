@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SkillDef" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://core/defs/skill_def.gd" id="1_def"]
+
+[resource]
+script = ExtResource("1_def")
+id = &"lunge"
+display_name = "Lunge"
+short_name = "LNG"
+kind = 2
+sp_cost = 8
+cooldown = 5.0
+power = 0.8
+range = 0.0
+radius = 4.0
+knockback = 1.4
+description = "Dash 4 m toward the target (or forward) and hit enemies where you land for 80% ATK."

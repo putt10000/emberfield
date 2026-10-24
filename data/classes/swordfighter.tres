@@ -1,7 +1,11 @@
-[gd_resource type="Resource" script_class="ClassDef" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="ClassDef" load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://core/defs/class_def.gd" id="1_def"]
 [ext_resource type="Resource" path="res://art/sprites/player_sheet.tres" id="2_sheet"]
+[ext_resource type="Resource" path="res://data/skills/cleave.tres" id="3_s1"]
+[ext_resource type="Resource" path="res://data/skills/ember_whirl.tres" id="4_s2"]
+[ext_resource type="Resource" path="res://data/skills/lunge.tres" id="5_s3"]
+[ext_resource type="Resource" path="res://data/skills/second_wind.tres" id="6_s4"]
 
 [resource]
 script = ExtResource("1_def")
@@ -21,4 +25,6 @@ hp_per_level = 12
 sp_per_level = 4
 atk_per_level = 2
 def_per_level = 1
-skill_ids = Array[StringName]([&"cleave", &"ember_whirl", &"lunge", &"second_wind"])
+skills = Array[Resource]([ExtResource("3_s1"), ExtResource("4_s2"), ExtResource("5_s3"), ExtResource("6_s4")])
+sp_regen_out_of_combat = 0.8
+sp_regen_in_combat = 0.3

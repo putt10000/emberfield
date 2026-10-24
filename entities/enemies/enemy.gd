@@ -14,6 +14,7 @@ var spawn_position: Vector3
 var facing: int = Facing.DOWN
 var _target: Node = null  ## who this enemy is attacking (for BASIC_ATTACK intents)
 var _nav_target := Vector3.INF
+var _knockback := Vector3.ZERO
 
 @onready var agent: NavigationAgent3D = $NavigationAgent3D
 @onready var sprite: BillboardSprite = $Sprite
@@ -67,9 +68,21 @@ func navigation_finished() -> bool:
 	return _nav_target == Vector3.INF or agent.is_navigation_finished()
 
 
+## Called by CombatSystem: an impulse (units/s) that decays over ~0.3 s.
+func apply_knockback(impulse: Vector3) -> void:
+	_knockback = impulse
+	_knockback.y = 0.0
+
+
 ## Moves one physics step along the current path. Call from the AI each tick.
 func step_navigation() -> void:
 	var dir := Vector3.ZERO
+	if _knockback.length() > 0.2:
+		velocity = _knockback
+		_knockback = _knockback.move_toward(Vector3.ZERO, 30.0 * get_physics_process_delta_time())
+		move_and_slide()
+		global_position.y = 0.0
+		return
 	if _nav_target != Vector3.INF and not agent.is_navigation_finished():
 		var to := agent.get_next_path_position() - global_position
 		to.y = 0.0
@@ -123,6 +136,7 @@ func _on_entity_died(entity: Node, _killer: Node) -> void:
 
 
 func respawn() -> void:
+	_knockback = Vector3.ZERO
 	stats = Stats.from_enemy(def)
 	global_position = spawn_position
 	velocity = Vector3.ZERO

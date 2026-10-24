@@ -88,11 +88,15 @@ func _on_animation_finished() -> void:
 
 ## Brief white flash used when hit. HDR-bright so it blooms with glow on.
 func flash() -> void:
+	flash_color(Color(4.0, 4.0, 4.0, 1.0))
+
+
+func flash_color(c: Color, seconds: float = 0.16) -> void:
 	if _flash_tween:
 		_flash_tween.kill()
-	modulate = Color(4.0, 4.0, 4.0, 1.0)
+	modulate = c
 	_flash_tween = create_tween()
-	_flash_tween.tween_property(self, "modulate", Color.WHITE, 0.14)
+	_flash_tween.tween_property(self, "modulate", Color.WHITE, seconds)
 
 
 func reset() -> void:

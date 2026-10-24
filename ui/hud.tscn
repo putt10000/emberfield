@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://ui/hud.gd" id="1_s"]
 [ext_resource type="Script" path="res://ui/safe_area_container.gd" id="2_safe"]
 [ext_resource type="Script" path="res://ui/controls/touch_joystick.gd" id="3_joy"]
 [ext_resource type="Script" path="res://ui/world_bars.gd" id="4_bars"]
+[ext_resource type="Script" path="res://ui/controls/action_bar.gd" id="5_bar"]
 
 [sub_resource type="StyleBoxFlat" id="BarBg"]
 bg_color = Color(0, 0, 0, 0.6)
@@ -154,6 +155,23 @@ theme_override_styles/background = SubResource("BarBg")
 theme_override_styles/fill = SubResource("TargetFill")
 value = 100.0
 show_percentage = false
+
+[node name="ActionBar" type="Control" parent="SafeArea/Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -310.0
+offset_top = -292.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("5_bar")
 
 [node name="MenuButton" type="Button" parent="SafeArea/Root"]
 unique_name_in_owner = true

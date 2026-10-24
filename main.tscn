@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://main.gd" id="1_main"]
 [ext_resource type="PackedScene" path="res://world/field.tscn" id="2_field"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" path="res://ui/debug_overlay.tscn" id="11_dbg"]
 [ext_resource type="PackedScene" path="res://world/target_ring.tscn" id="12_ring"]
 [ext_resource type="Script" path="res://entities/shared/damage_numbers.gd" id="13_dmg"]
+[ext_resource type="Script" path="res://world/skill_vfx.gd" id="14_vfx"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_main")
@@ -29,6 +30,9 @@ script = ExtResource("1_main")
 
 [node name="DamageNumbers" type="Node3D" parent="World"]
 script = ExtResource("13_dmg")
+
+[node name="SkillVfx" type="Node3D" parent="World"]
+script = ExtResource("14_vfx")
 
 [node name="GameRules" type="Node" parent="."]
 script = ExtResource("5_rules")

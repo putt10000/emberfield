@@ -25,8 +25,19 @@ var _shake_strength := 0.0
 func _ready() -> void:
 	apply_geometry()
 	EventBus.screen_shake_requested.connect(_on_shake)
+	EventBus.damage_dealt.connect(_on_damage_dealt)
 	if target:
 		snap_to_target()
+
+
+## Visual reaction only: the player's crits and heavy strikes shake the view.
+func _on_damage_dealt(result: Dictionary) -> void:
+	if result.source != target:
+		return
+	if result.is_crit:
+		_on_shake(0.12, 0.18)
+	elif result.skill_id == &"cleave":
+		_on_shake(0.07, 0.12)
 
 
 func apply_geometry() -> void:

@@ -7,8 +7,9 @@ An original 2.5D action RPG prototype in the HD-2D style, built with Godot 4.7
 1. Open Godot, click **Import**, pick this folder's `project.godot`, then press **F5**.
    Or from a terminal: `godot --path "$(pwd)"` (the `godot` alias is set in ~/.zshrc).
 2. Controls: click the ground to walk (tap-to-move) or WASD/arrows. Click an enemy to
-   target it; you walk into range and auto-attack. Esc or the MENU button opens settings
-   (movement mode, shadows, glow, FPS overlay). F3 toggles the overlay.
+   target it; you walk into range and auto-attack. Space attacks the nearest enemy,
+   keys 1-4 use the skills (or press the round buttons bottom-right). Esc or the MENU
+   button opens settings (movement mode, shadows, glow, FPS overlay). F3 toggles the overlay.
 3. On a phone: tap the ground, or switch to Joystick in settings and drag in the bottom-left area.
 
 ## Regenerate placeholder sprites
