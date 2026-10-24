@@ -11,6 +11,8 @@ signal menu_requested
 @onready var name_label: Label = %NameLabel
 @onready var hp_bar: ProgressBar = %HpBar
 @onready var sp_bar: ProgressBar = %SpBar
+@onready var hp_text: Label = %HpText
+@onready var sp_text: Label = %SpText
 @onready var target_frame: Control = %TargetFrame
 @onready var target_name: Label = %TargetName
 @onready var target_hp: ProgressBar = %TargetHp
@@ -40,6 +42,8 @@ func _process(_delta: float) -> void:
 		hp_bar.value = s.hp
 		sp_bar.max_value = maxi(s.max_sp, 1)
 		sp_bar.value = s.sp
+		hp_text.text = "%d / %d" % [s.hp, s.max_hp]
+		sp_text.text = "%d / %d" % [s.sp, s.max_sp]
 	if _target and is_instance_valid(_target) and _target.is_alive():
 		var ts: Stats = _target.stats
 		target_name.text = _target.display_name

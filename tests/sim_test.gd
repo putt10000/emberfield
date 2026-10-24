@@ -173,7 +173,7 @@ func _run() -> void:
 	_check(player.stats.hp == 80, "second wind heals 30%% (hp %d)" % player.stats.hp)
 	player.stats.sp = 0
 	await _wait_frames(int(5.5 * Engine.physics_ticks_per_second))
-	_check(player.stats.sp >= 2, "sp regenerates out of combat (sp %d after 5.5 s)" % player.stats.sp)
+	_check(player.stats.sp >= 2 and player.stats.sp <= 6, "sp regenerates ~0.8/s out of combat (sp %d after 5.5 s)" % player.stats.sp)
 
 	# --- Player death + respawn -------------------------------------------
 	player.stats.hp = 1
